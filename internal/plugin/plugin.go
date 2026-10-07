@@ -7,6 +7,7 @@ import (
 	"net/rpc"
 
 	v1alpha1 "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1"
+	"github.com/argoproj/argo-rollouts/utils/evaluate"
 	"github.com/argoproj/argo-rollouts/utils/plugin/types"
 	pluginTypes "github.com/argoproj/argo-rollouts/utils/plugin/types"
 	goPlugin "github.com/hashicorp/go-plugin"
@@ -213,6 +214,20 @@ func (p *RpcPlugin) Run(analysisRun *v1alpha1.AnalysisRun, metric v1alpha1.Metri
 		newMeasurement.Value = "0"
 		newMeasurement.Phase = v1alpha1.AnalysisPhaseFailed
 		log.Info("Canary promotion not recommended - kubernetes-agent can create GitHub issues/PRs via its tools")
+	}
+
+	// Honour successCondition/failureCondition when set, like built-in providers do
+	if metric.SuccessCondition != "" || metric.FailureCondition != "" {
+		value := 0.0
+		if result.Promote {
+			value = float64(result.Confidence) / 100.0
+		}
+		phase, err := evaluate.EvaluateResult(value, metric, *log.NewEntry(log.StandardLogger()))
+		if err != nil {
+			log.WithError(err).Error("Failed to evaluate metric conditions")
+			return markMeasurementError(newMeasurement, err)
+		}
+		newMeasurement.Phase = phase
 	}
 
 	finishedTime := metav1.Now()

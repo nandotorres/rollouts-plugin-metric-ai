@@ -1,3 +1,5 @@
+github.com/antonmedv/expr v1.15.5 h1:y0Iz3cEwmpRz5/r3w4qQR0MfIqJGdGM1zbhD/v0G5Vg=
+github.com/antonmedv/expr v1.15.5/go.mod h1:0E/6TxnOlRNp81GMzX9QfDPAmHo2Phg00y4JUv1ihsE=
 github.com/argoproj/argo-rollouts v1.9.0 h1:bXgBpwCByXyAUcgBnyP0fxkSW2CEot78InTFjFlag5g=
 github.com/argoproj/argo-rollouts v1.9.0/go.mod h1:jOalqf2kDSmCp7eQpFF4i3kHnlEqNE/Yjwz1q7CpPIU=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=

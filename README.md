@@ -155,6 +155,10 @@ No fallback mode exists.
 
 Namespace is auto-detected from AnalysisRun.
 
+### Measurement Value and Conditions
+
+The measurement value is the agent's confidence as a decimal (`0.0` to `1.0`) when it recommends promotion, and `0` otherwise. Without `successCondition` or `failureCondition`, the agent's recommendation decides the result. When either is set on the metric, it is evaluated against this value, for example `successCondition: result > 0.90`.
+
 ### Environment Variables
 
 | Variable | Required | Description |
